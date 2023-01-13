@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone_ui/model/avatar/avatar.dart';
 import 'package:instagram_clone_ui/model/avatar/image_avatar.dart';
+import 'package:instagram_clone_ui/repository/avatar_repository.dart';
 
-class InstagramClonePage extends StatelessWidget {
+class InstagramClonePage extends StatefulWidget {
   const InstagramClonePage({Key? key}) : super(key: key);
+
+  @override
+  State<InstagramClonePage> createState() => _InstagramClonePageState();
+}
+
+class _InstagramClonePageState extends State<InstagramClonePage> {
+  List<Avatar> feed = [];
+
+  @override
+  void setState(VoidCallback fn) async {
+    var feed = await AvatarRepository().findAll();
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +71,8 @@ class InstagramClonePage extends StatelessWidget {
             ],
           ),
           ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            // scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             children: [
               Row(
@@ -94,7 +111,7 @@ class InstagramClonePage extends StatelessWidget {
                     visto: false,
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ],
