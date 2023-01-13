@@ -15,7 +15,7 @@ class _InstagramClonePageState extends State<InstagramClonePage> {
 
   @override
   void setState(VoidCallback fn) async {
-    var feed = await AvatarRepository().findAll();
+    feed = await AvatarRepository().findAll();
     super.setState(fn);
   }
 
