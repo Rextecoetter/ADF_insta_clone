@@ -8,9 +8,6 @@ class AvatarRepository {
     var jsonFile = await rootBundle.loadString('assets/stories.json');
 
     List<dynamic> storieFeed = jsonDecode(jsonFile) as List;
-
-    print('bla: : $storieFeed');
-
     return storieFeed.map((e) => Avatar.fromJson(e)).toList();
   }
 }
