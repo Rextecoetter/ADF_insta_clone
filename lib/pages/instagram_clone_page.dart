@@ -14,10 +14,20 @@ class _InstagramClonePageState extends State<InstagramClonePage> {
   List<Avatar> feed = [];
 
   @override
-  void setState(VoidCallback fn) async {
-    feed = await AvatarRepository().findAll();
-    super.setState(fn);
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      feed = await AvatarRepository().findAll();
+      print('${feed[0].name}');
+    });
   }
+
+  // @override
+  // void setState(VoidCallback fn) async {
+  //   feed = await AvatarRepository().findAll();
+  //   super.setState(fn);
+  // }
 
   @override
   Widget build(BuildContext context) {
