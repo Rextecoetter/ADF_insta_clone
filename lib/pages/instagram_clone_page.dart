@@ -19,7 +19,6 @@ class _InstagramClonePageState extends State<InstagramClonePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       feed = await AvatarRepository().findAll();
-      print('${feed[0].name}');
     });
   }
 
@@ -55,7 +54,11 @@ class _InstagramClonePageState extends State<InstagramClonePage> {
                 width: MediaQuery.of(context).size.width * 0.25,
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      print('Batata');
+                    });
+                  },
                   icon: Image.asset(
                     'assets/icons/more.png',
                     color: Colors.white,
@@ -81,49 +84,69 @@ class _InstagramClonePageState extends State<InstagramClonePage> {
             ],
           ),
           ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            // scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: [
-              Row(
-                children: const [
-                  ImageAvatar(
-                    urlImage:
-                        'https://ovicio.com.br/wp-content/uploads/2021/07/20210712-one-piece-zoro-wano-postcover-555x555.jpg',
-                    live: true,
-                    visto: false,
-                  ),
-                  ImageAvatar(
-                    urlImage: 'https://i.pinimg.com/564x/b2/79/92/b27992199b45e0384cb8606977581a75.jpg',
-                    live: false,
-                    visto: false,
-                  ),
-                  ImageAvatar(
-                    urlImage: 'https://cdns-images.dzcdn.net/images/cover/cf408a04d2abfd13e98df96eabfd3dbe/500x500.jpg',
-                    live: false,
-                    visto: false,
-                  ),
-                  ImageAvatar(
-                    urlImage:
-                        'https://criticalhits.com.br/wp-content/uploads/2021/12/one-piece-sanji-1102394-1280x0-1-2.jpeg',
-                    live: false,
-                    visto: false,
-                  ),
-                  ImageAvatar(
-                    urlImage:
-                        'https://www.einerd.com.br/wp-content/uploads/2021/09/one-piece-usopp-e1631106248403-890x464.jpg',
-                    live: false,
-                    visto: false,
-                  ),
-                  ImageAvatar(
-                    urlImage: 'https://sm.ign.com/ign_br/screenshot/default/blob_n8g8.jpg',
-                    live: false,
-                    visto: false,
-                  ),
-                ],
-              ),
+              SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    children: const [
+                      ImageAvatar(
+                        urlImage:
+                            'https://ovicio.com.br/wp-content/uploads/2021/07/20210712-one-piece-zoro-wano-postcover-555x555.jpg',
+                        live: true,
+                        visto: false,
+                      ),
+                      ImageAvatar(
+                        urlImage: 'https://i.pinimg.com/564x/b2/79/92/b27992199b45e0384cb8606977581a75.jpg',
+                        live: false,
+                        visto: false,
+                      ),
+                      ImageAvatar(
+                        urlImage:
+                            'https://cdns-images.dzcdn.net/images/cover/cf408a04d2abfd13e98df96eabfd3dbe/500x500.jpg',
+                        live: false,
+                        visto: false,
+                      ),
+                      ImageAvatar(
+                        urlImage:
+                            'https://criticalhits.com.br/wp-content/uploads/2021/12/one-piece-sanji-1102394-1280x0-1-2.jpeg',
+                        live: false,
+                        visto: false,
+                      ),
+                      ImageAvatar(
+                        urlImage:
+                            'https://www.einerd.com.br/wp-content/uploads/2021/09/one-piece-usopp-e1631106248403-890x464.jpg',
+                        live: false,
+                        visto: false,
+                      ),
+                      ImageAvatar(
+                        urlImage: 'https://sm.ign.com/ign_br/screenshot/default/blob_n8g8.jpg',
+                        live: false,
+                        visto: false,
+                      ),
+                    ],
+                  )),
             ],
           ),
+          ListView.separated(
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return ImageAvatar(
+                urlImage: feed[index].urlImage,
+                live: feed[index].live,
+                visto: feed[index].visto,
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) => const SizedBox(
+              width: 10,
+            ),
+            itemCount: feed.length,
+          ),
+          Row(
+            children: [],
+          )
         ],
       ),
     );
